@@ -1,10 +1,9 @@
 #
+# No spaces nor # allowed as part of the fields!
 #
-# local_dir feed_url trafo_xsl load/keep_count user password
+# Fields:
+#		<local_dir>	<feed_rss_url> <episode_url_and_title_xslt> <keep_count> <user> <password>
 #
-# No spaces allowed as part of the fields!
-#
-die-blendung http://rec.mro.name/podcasts/die%20blendung/broadcasts.rss rss2url.xslt 20 br radio
-radiowelt http://rec.mro.name/podcasts/radiowelt/broadcasts.rss rss2url.xslt 1 br radio
+cre http://cre.fm/feed/mp3/ rss2url.xslt 2 nouser nopwd
 
-# mandatory newline at EOF
+# mandatory newline after last content line
