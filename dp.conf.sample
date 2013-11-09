@@ -1,0 +1,9 @@
+#
+# No spaces nor # allowed as part of the fields!
+#
+# Fields:
+#		<local_dir>	<feed_rss_url> <episode_url_and_title_xslt> <keep_count> <user> <password>
+#
+cre http://cre.fm/feed/mp3/ rss2url.xslt 2 nouser nopwd
+
+# mandatory newline after last content line

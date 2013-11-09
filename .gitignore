@@ -1,0 +1,5 @@
+.DS_Store
+podcasts/
+!podcasts/index.head.rss
+!podcasts/index.tail.rss
+
