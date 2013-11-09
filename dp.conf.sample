@@ -1,0 +1,10 @@
+#
+#
+# local_dir feed_url trafo_xsl load/keep_count user password
+#
+# No spaces allowed as part of the fields!
+#
+die-blendung http://rec.mro.name/podcasts/die%20blendung/broadcasts.rss rss2url.xslt 20 br radio
+radiowelt http://rec.mro.name/podcasts/radiowelt/broadcasts.rss rss2url.xslt 1 br radio
+
+# mandatory newline at EOF
