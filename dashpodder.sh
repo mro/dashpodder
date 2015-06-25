@@ -6,7 +6,7 @@
 #
 # inspired by
 # - http://lincgeek.org/bashpodder/
-# - https://code.google.com/p/mashpodder/
+# - https://github.com/chessgriffin/mashpodder
 #
 USER_AGENT=$(basename $0)
 USER_AGENT="http://purl.mro.name/dashpodder"
@@ -14,6 +14,7 @@ USER_AGENT="http://purl.mro.name/dashpodder"
 curl --version >/dev/null || { echo "install curl" && exit 1; }
 xsltproc --version >/dev/null || { echo "install xsltproc" && exit 1; }
 xmllint --version 2>/dev/null || { echo "install xmllint" && exit 1; }
+# @todo: test sed -re behaviour
 if [ '68ac906495480a3404beee4874ed853a037a7a8f  -' != "$(echo -n 'Franz jagt im komplett verwahrlosten Taxi quer durch Bayern' | shasum)" ] ; then
   echo "shasum produces strange results." && exit 1
 fi
