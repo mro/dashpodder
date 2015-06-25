@@ -20,6 +20,8 @@ if [ 'd4774986530809767bfafb171f01b060dbc137a3  -' != "$(echo 'Franz jagt im kom
   echo "shasum produces strange results." && exit 1
 fi
 
+echo "$(date +%FT%T%z) start..."
+
 # read feeds from dp.conf, strip comment lines starting with #, collapse whitespace
 sed -re 's/\s+/ / ; s/^#.*//' dp.conf | while read dst feed xslt amount user pass
 do
@@ -63,6 +65,8 @@ do
     done
     rm "$feed_original_http_head" 2>/dev/null
 
+    # clean up duplicates?
+
     # purge outdated enclosures (but keep all *.rss)
     ls -t "podcasts/$dst"/* \
     | egrep -ve "\.rss$" \
@@ -86,4 +90,7 @@ do
     cat "podcasts/$dst/index.tail.rss" >> "$index_rss"
     touch -r "$feed_original" "$index_rss"
   fi
+  echo "$(date +%FT%T%z) done $dst"
 done
+
+echo "$(date +%FT%T%z) finish."
