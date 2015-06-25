@@ -36,7 +36,7 @@ do
   feed_original="podcasts/$dst/original.rss"
   feed_original_http_head="podcasts/$dst/original.http.rss"
 
-  curl --silent --user-agent "$USER_AGENT" --user "$user:$pass" --anyauth --compressed --location --remote-time --time-cond "$feed_original" --dump-header "$feed_original_http_head" --output "$feed_original" --url "$feed"
+  curl --silent --limit-rate 800K --user-agent "$USER_AGENT" --user "$user:$pass" --anyauth --compressed --location --remote-time --time-cond "$feed_original" --dump-header "$feed_original_http_head" --output "$feed_original" --url "$feed"
   egrep -e "^HTTP/[^ ]+ 200 " "$feed_original_http_head" > /dev/null
   if [ $? = 0 ] ; then
     # download enclosure and extract <item> from feed rss
@@ -54,7 +54,7 @@ do
       http="$file.head~"
       echo "\t$enclosure"
 
-      curl --silent --user-agent "$USER_AGENT" --user "$user:$pass" --anyauth --compressed --location --remote-time --time-cond "$file" --dump-header "$http" --output "$tmp" --url "$enclosure"
+      curl --silent --limit-rate 800K --user-agent "$USER_AGENT" --user "$user:$pass" --anyauth --compressed --location --remote-time --time-cond "$file" --dump-header "$http" --output "$tmp" --url "$enclosure"
       egrep -e "^HTTP/[^ ]+ 200 " "$http" > /dev/null
       if [ $? = 0 ] ; then
         mv "$tmp" "$file"
