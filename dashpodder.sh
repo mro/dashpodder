@@ -21,18 +21,12 @@ if [ 'd4774986530809767bfafb171f01b060dbc137a3  -' != "$(echo 'Franz jagt im kom
 fi
 
 # read feeds from dp.conf, strip comment lines starting with #, collapse whitespace
-sed -e 's/\s+/ / ; s/^#.*//' dp.conf | while read line
+sed -re 's/\s+/ / ; s/^#.*//' dp.conf | while read dst feed xslt amount user pass
 do
-  if [ "$line" = "" ] ; then
+  if [ "$amount" = "" ] ; then
     continue
   fi
-  echo "$line"
-  dst=$(echo "$line" | cut -f1 -d ' ')
-  feed=$(echo "$line" | cut -d " " -f2)
-  xslt=$(echo "$line" | cut -f3 -d ' ')
-  amount=$(echo "$line" | cut -f4 -d ' ')
-  user=$(echo "$line" | cut -f5 -d ' ')
-  pass=$(echo "$line" | cut -f6 -d ' ')
+  echo "$dst $feed $xslt $amount $user $pass"
 
   # fetch feed xml (rss) and get episode url and titles
   mkdir -p "podcasts/$dst"
@@ -44,12 +38,10 @@ do
   if [ $? = 0 ] ; then
     # download enclosure and extract <item> from feed rss
     xsltproc "$xslt" "$feed_original" 2>/dev/null \
-    | sed -e 's/\s+/ /' \
+    | sed -re 's/\s+/ /' \
     | head -n $amount \
-    | while read episode
+    | while read enclosure title
     do
-      enclosure=$(echo "$episode" | cut -f1 -d ' ')
-      title=$(echo "$episode" | cut -f2- -d ' ')
       extension=$(echo "$enclosure" | sed -e 's/^.*\.//')
       sha=$(echo "$enclosure" | shasum | cut -d ' ' -f1)
       file_base=$(echo "podcasts/$dst/$sha-$title" | sed -e 's/#/_/') # curl doesn't like # in filenames
