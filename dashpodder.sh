@@ -80,16 +80,17 @@ do
 
     # build local podcast index.rss
     index_rss="podcasts/$dst/index.rss"
-    cat "podcasts/$dst/index.head.rss" > "$index_rss"
+    cat "podcasts/$dst/index.head.rss" > "$index_rss"~
     # todo: <pubDate> and <lastBuildDate>
     ls -t "podcasts/$dst/"*.item.rss \
     | while read item_rss
     do
       # append in order
-      cat "$item_rss" >> "$index_rss"
+      cat "$item_rss" >> "$index_rss"~
     done
-    cat "podcasts/$dst/index.tail.rss" >> "$index_rss"
-    touch -r "$feed_original" "$index_rss"
+    cat "podcasts/$dst/index.tail.rss" >> "$index_rss"~
+    xmllint --format --encode UTF-8 --output "$index_rss" "$index_rss"~ && touch -r "$feed_original" "$index_rss"
+    rm "$index_rss"~
   fi
   echo "$(date +%FT%T%z) done $dst"
 done
