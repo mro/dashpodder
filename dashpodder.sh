@@ -9,6 +9,7 @@
 # - https://code.google.com/p/mashpodder/
 #
 USER_AGENT=$(basename $0)
+USER_AGENT="http://purl.mro.name/dashpodder"
 
 curl --version >/dev/null || { echo "install curl" && exit 1; }
 xsltproc --version >/dev/null || { echo "install xsltproc" && exit 1; }
